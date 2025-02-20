@@ -1,0 +1,42 @@
+name: ChromaDB Vector Store Integration
+description: AMP for integrating ChromaDB as a vector store in Cloudera Machine Learning.
+author: Your Name
+specification_version: 1.0
+prototype_version: 1.0
+date: "2023-10-15"
+
+runtimes:
+  - editor: Workbench
+    kernel: Python 3.9
+    edition: Standard
+
+tasks:
+  - type: create_job
+    name: Install Dependencies
+    entity_label: install_deps
+    script: scripts/install_deps.py
+    arguments: None
+    cpu: 1
+    memory: 2
+    short_summary: Install ChromaDB and other required dependencies.
+    environment:
+      TASK_TYPE: CREATE/RUN_JOB
+
+  - type: run_job
+    entity_label: install_deps
+    short_summary: Running the job to install dependencies.
+    long_summary: >-
+      This job installs ChromaDB and its dependencies. It requires at least 2GB of memory.
+
+  - type: start_application
+    name: ChromaDB Server
+    entity_label: chromadb_server
+    script: scripts/start_chromadb.py
+    subdomain: chromadb
+    environment_variables:
+      CHROMA_CONFIG_PATH: /etc/chroma/chroma_config.yaml
+    cpu: 1
+    memory: 2
+    short_summary: Start the ChromaDB server.
+    long_summary: >-
+      This application starts the ChromaDB server, which will be accessible at the specified subdomain.
