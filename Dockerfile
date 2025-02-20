@@ -1,7 +1,10 @@
 FROM cloudera/ml-runtime:1.0.0
 
 # Install ChromaDB and other dependencies
-RUN pip install chromadb>=0.4.0
+RUN pip install "chromadb>=0.4.0"
+
+# Create the Chroma storage directory and set appropriate permissions
+RUN mkdir -p /var/lib/chroma && chmod 777 /var/lib/chroma
 
 # Copy the setup scripts and configuration files
 COPY scripts/ /scripts/
